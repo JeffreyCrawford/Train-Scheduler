@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Train Schedule</title>
+
+<!-- CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+</head>
+
+<body>
+
+
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4">Train Schedule</h1>
+        </div>
+        
+    
+        <div class="row schedule">
+            <div class="col">
+                <div class="card">
+                    <h5 class="card-header">Current Schedule</h5>
+                    <div class="card-body">
+
+                        <table>
+                            <tr>
+                                <th>Train Name</th>
+                                <th>Destination</th>
+                                <th>Frequency (min)</th>
+                                <th>Next Arrival</th>
+                                <th>Minutes Away</th>
+                            </tr>
+                                <td>The Polar Express</td>
+                                <td>The North Pole</td>
+                                <td>525600</td>
+                                <td>12/25/18</td>
+                                <td>A lot</td>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row add-train">
+            <div class="col">
+                <div class="card">
+                    <h5 class="card-header">Add Train</h5>
+                    <div class="card-body">
+
+                            <div class="form">
+                                <h6>Train Name</h6>
+                                <input class="text-box train-name" type="text">
+                            </div>
+
+                            <br>
+
+                            <div class="form">
+                                <h6>Destination</h6>  
+                                <input class="text-box destination" type="text">
+                            </div>
+
+                            <br>
+
+                            <div class="form">
+                                <h6>First Train Time (HH:mm - military time)</h6>                               
+                                <input class="text-box first-time" type="text">
+                            </div>
+
+                            <br>
+
+                            <div class="form">
+                                <h6>Frequency</h6>                                
+                                <input class="text-box frequency" type="text">
+                            </div>
+
+                            <br>
+
+                            <button class="btn btn-primary submit" type="submit">Submit</button>
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        </div>
+    </div>
+
+
+<!-- JAVASCRIPT -->
+    <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="assets/javascript/script.js"></script> 
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
