@@ -7,10 +7,13 @@ var config = {
     storageBucket: "",
     messagingSenderId: "731802922803"
 };
-
 firebase.initializeApp(config);
 
+
+
+
 var database = firebase.database();
+
 
 $(".submit").on("click", function() {
 
@@ -20,36 +23,44 @@ $(".submit").on("click", function() {
     var firstTime = $(".first-time").val().trim();
     var frequency = $(".frequency").val().trim();
 
-    /* CONSOLE LOG VARIABLES */
+    /* CONSOLE LOG INPUT VARIABLES */
     console.log(name)
     console.log(destination)
     console.log(firstTime)
     console.log(frequency)
 
-    var newTrain = {
+    /* SET TRAIN OBJECT */
+    var train = {
         name: name,
         destination: destination,
         firstTime: firstTime,
         frequency: frequency
     };
 
-    database.ref().push(newTrain);
+    /* PUSH INFO TO DATABASE */
+    database.ref().push(train);
 
+    /* RETRIEVE INFO FROM DATABASE */
     database.ref().on("child_added", function(trainSnapshot) {
-        var trainName = trainSnapshot.val().name
-        var destination = trainSnapshot.val().destination
-        var firstTime = trainSnapshot.val().firstTime
-        var frequency = trainSnapshot.val().frequency
+        var trainName = trainSnapshot.val().name;
+        var destination = trainSnapshot.val().destination;
+        var firstTime = trainSnapshot.val().firstTime;
+        var frequency = trainSnapshot.val().frequency;
 
+
+        console.log(getTime());
+
+    /* APPEND DATABASE INFO TO TABLE */
     $("table > tbody").append(
         "<tr><td>" + trainName +
         "</td><td>" + destination +
         "</td><td>" + frequency + 
-        "</td><td>" + "NEXT ARRIVAL" +
-        "</td><td>" + "MINUTES AWAY" +
+        "</td><td>" + "" +
+        "</td><td>" + "" +
         "</td></tr>"
-    )
+    );
     });
+
 
 
 
