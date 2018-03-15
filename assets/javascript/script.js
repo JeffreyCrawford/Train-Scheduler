@@ -47,17 +47,9 @@ $(".submit").on("click", function() {
         var firstTime = trainSnapshot.val().firstTime;
         var frequency = trainSnapshot.val().frequency;
 
-        var first = function(firstTime) {
-            isValid(firstTime)
-        };
 
-        var now = function() {
-            getTime()
-        };
 
-        console.log(first);
 
-        console.log(now);
 
     /* APPEND DATABASE INFO TO TABLE */
     $("table > tbody").append(
