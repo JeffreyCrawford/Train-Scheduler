@@ -14,7 +14,7 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
-
+/* SUBMIT BUTTON ON CLICK EVENT */
 $(".submit").on("click", function() {
 
     /* RETRIEVE INPUT VALUES AND STORE IN VARIABLES/OBJECT */
@@ -47,8 +47,17 @@ $(".submit").on("click", function() {
         var firstTime = trainSnapshot.val().firstTime;
         var frequency = trainSnapshot.val().frequency;
 
+        var first = function(firstTime) {
+            isValid(firstTime)
+        };
 
-        console.log(getTime());
+        var now = function() {
+            getTime()
+        };
+
+        console.log(first);
+
+        console.log(now);
 
     /* APPEND DATABASE INFO TO TABLE */
     $("table > tbody").append(
