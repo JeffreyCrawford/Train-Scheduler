@@ -54,7 +54,9 @@ $(document).ready(function() {
 
         /* PREVENT REFRESH AND DEFINE DATA PULL/PUSH FUNCTION */
         event.preventDefault();
+
         function retrievePush() {
+
             /* RETRIEVE INPUT VALUES AND STORE IN VARIABLES/OBJECT */
             var name = $(".train-name").val().trim();
             var destination = $(".destination").val().trim();
@@ -71,7 +73,6 @@ $(document).ready(function() {
 
             /* PUSH TRAIN OBJECT TO DATABASE */
             database.ref().push(train);
-
         }
 
         /* IF THE FORM IS FILLED, PULL/PUSH */
@@ -82,11 +83,6 @@ $(document).ready(function() {
 
         /* EMPTIES THE FORM AND UPDATES */
         $("input").val("");
-        update();
-
-    })
-
-    $(".test").on("click", function() {
         update();
     })
 
