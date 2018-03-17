@@ -14,6 +14,8 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
+
+
 /* SUBMIT BUTTON ON CLICK EVENT */
 $(".submit").on("click", function() {
 
@@ -42,28 +44,39 @@ $(".submit").on("click", function() {
 
     /* RETRIEVE INFO FROM DATABASE */
     database.ref().on("child_added", function(trainSnapshot) {
-        var trainName = trainSnapshot.val().name;
+        var name = trainSnapshot.val().name;
         var destination = trainSnapshot.val().destination;
         var firstTime = trainSnapshot.val().firstTime;
         var frequency = trainSnapshot.val().frequency;
-        var frequencyMoment = moment.duration(frequency, "minutes");
 
+
+        /* CALCULATE ARRIVAL TIMES */
+        var firstTimeMoment = moment(firstTime, "hh:mm A").subtract(1, "years");
+        var now = moment();
+        var diff = now.diff(moment(firstTimeMoment), "minutes");
+        var remainder = diff % frequency;
+        var timeRemaining = frequency - remainder;
+        var nextTrain = moment().add(timeRemaining, "minutes").format("hh:mm A");
+        
 
         /* APPEND DATABASE INFO TO TABLE */
         $("table > tbody").append(
-            "<tr><td>" + trainName +
+            "<tr><td>" + name +
             "</td><td>" + destination +
-            "</td><td>" + frequencyMoment + 
-            "</td><td>" + "" +
-            "</td><td>" + "" +
+            "</td><td>" + frequency + 
+            "</td><td>" + nextTrain +
+            "</td><td>" + timeRemaining +
             "</td></tr>"
         );
+
         
     });
-    console.log(
-        moment(firstTime).isValid()
-    );
 
 
+
+
+
+    /* MINUTES AWAY = (NOW - FIRST) % FREQUENCY */
+    /* NEXT ARRIVAL = NOW + MINUTES AWAY */
 
 })
