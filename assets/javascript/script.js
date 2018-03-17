@@ -11,33 +11,36 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
-$(document).ready(
+$(document).ready(function() {
     
-    /* INITIAL DATA PULL FROM FIREBASE */
-    database.ref().on("child_added", function(snapshot) {
-        var name = snapshot.val().name;
-        var destination = snapshot.val().destination;
-        var firstTime = snapshot.val().firstTime;
-        var frequency = snapshot.val().frequency;
+    function update() {
 
-        /* CALCULATE ARRIVAL TIMES */
-        var firstTimeMoment = moment(firstTime, "hh:mm A").subtract(1, "years");
-        var now = moment();
-        var diff = now.diff(moment(firstTimeMoment), "minutes");
-        var remainder = diff % frequency;
-        var timeRemaining = frequency - remainder;
-        var nextTrain = moment().add(timeRemaining, "minutes").format("hh:mm A");
+        /* INITIAL DATA PULL FROM FIREBASE */
+        database.ref().on("child_added", function(snapshot) {
+            var name = snapshot.val().name;
+            var destination = snapshot.val().destination;
+            var firstTime = snapshot.val().firstTime;
+            var frequency = snapshot.val().frequency;
 
-        /* APPEND DATABASE INFO TO TABLE */
-        $("table > tbody").append(
-            "<tr><td>" + name +
-            "</td><td>" + destination +
-            "</td><td>" + frequency + 
-            "</td><td>" + nextTrain +
-            "</td><td>" + timeRemaining +
-            "</td></tr>"
-        );
-    }),
+            /* CALCULATE ARRIVAL TIMES */
+            var firstTimeMoment = moment(firstTime, "hh:mm A").subtract(1, "years");
+            var now = moment();
+            var diff = now.diff(moment(firstTimeMoment), "minutes");
+            var remainder = diff % frequency;
+            var timeRemaining = frequency - remainder;
+            var nextTrain = moment().add(timeRemaining, "minutes").format("hh:mm A");
+
+            /* APPEND DATABASE INFO TO TABLE */
+            $("table > tbody").append(
+                "<tr><td>" + name +
+                "</td><td>" + destination +
+                "</td><td>" + frequency + 
+                "</td><td>" + nextTrain +
+                "</td><td>" + timeRemaining +
+                "</td></tr>"
+            );
+        })
+    }
 
 
     /* PUSH NEW DATA TO FIREBASE ON CLICK */
@@ -65,4 +68,4 @@ $(document).ready(
 
     })
 
-)
+})
