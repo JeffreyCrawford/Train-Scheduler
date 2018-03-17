@@ -46,22 +46,23 @@ $(".submit").on("click", function() {
         var destination = trainSnapshot.val().destination;
         var firstTime = trainSnapshot.val().firstTime;
         var frequency = trainSnapshot.val().frequency;
+        var frequencyMoment = moment.duration(frequency, "minutes");
 
 
-
-
-
-    /* APPEND DATABASE INFO TO TABLE */
-    $("table > tbody").append(
-        "<tr><td>" + trainName +
-        "</td><td>" + destination +
-        "</td><td>" + frequency + 
-        "</td><td>" + "" +
-        "</td><td>" + "" +
-        "</td></tr>"
-    );
+        /* APPEND DATABASE INFO TO TABLE */
+        $("table > tbody").append(
+            "<tr><td>" + trainName +
+            "</td><td>" + destination +
+            "</td><td>" + frequencyMoment + 
+            "</td><td>" + "" +
+            "</td><td>" + "" +
+            "</td></tr>"
+        );
+        
     });
-
+    console.log(
+        moment(firstTime).isValid()
+    );
 
 
 
