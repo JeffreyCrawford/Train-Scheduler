@@ -15,7 +15,10 @@ $(document).ready(function() {
     
     function update() {
 
-        /* INITIAL DATA PULL FROM FIREBASE */
+        /* REMOVE THE EXISTING TABLE */
+        $("td").remove();
+
+        /* PULL DATA FROM FIREBASE */
         database.ref().on("child_added", function(snapshot) {
             var name = snapshot.val().name;
             var destination = snapshot.val().destination;
@@ -30,7 +33,7 @@ $(document).ready(function() {
             var timeRemaining = frequency - remainder;
             var nextTrain = moment().add(timeRemaining, "minutes").format("hh:mm A");
 
-            /* APPEND DATABASE INFO TO TABLE */
+            /* APPEND DATA TO TABLE */
             $("table > tbody").append(
                 "<tr><td>" + name +
                 "</td><td>" + destination +
@@ -42,30 +45,49 @@ $(document).ready(function() {
         })
     }
 
+    /* UPDATES THE TABLE ON LOAD AND EVERY 10 SECONDS */
+    update();
+    setInterval(update, 10000)
 
     /* PUSH NEW DATA TO FIREBASE ON CLICK */
-    $(".submit").on("click", function() {
+    $(".submit").on("click", function(event) {
 
-        /* RETRIEVE INPUT VALUES AND STORE IN VARIABLES/OBJECT */
-        var name = $(".train-name").val().trim();
-        var destination = $(".destination").val().trim();
-        var firstTime = $(".first-time").val().trim();
-        var frequency = $(".frequency").val().trim();
+        /* PREVENT REFRESH AND DEFINE DATA PULL/PUSH FUNCTION */
+        event.preventDefault();
+        function retrievePush() {
+            /* RETRIEVE INPUT VALUES AND STORE IN VARIABLES/OBJECT */
+            var name = $(".train-name").val().trim();
+            var destination = $(".destination").val().trim();
+            var firstTime = $(".first-time").val().trim();
+            var frequency = $(".frequency").val().trim();
 
-        /* SET TRAIN OBJECT */
-        var train = {
-            name: name,
-            destination: destination,
-            firstTime: firstTime,
-            frequency: frequency
-        };
+            /* SET TRAIN OBJECT */
+            var train = {
+                name: name,
+                destination: destination,
+                firstTime: firstTime,
+                frequency: frequency
+            };
 
-        /* PUSH TRAIN OBJECT TO DATABASE */
-        database.ref().push(train);
+            /* PUSH TRAIN OBJECT TO DATABASE */
+            database.ref().push(train);
 
-        /* EMPTIES THE FORM */
-        $("input").val("")
+        }
 
+        /* IF THE FORM IS FILLED, PULL/PUSH */
+        if($(".train-name").val() && $(".destination").val() && $(".first-time").val() && $(".frequency").val()) {
+            retrievePush();
+        }
+        else {}
+
+        /* EMPTIES THE FORM AND UPDATES */
+        $("input").val("");
+        update();
+
+    })
+
+    $(".test").on("click", function() {
+        update();
     })
 
 })
