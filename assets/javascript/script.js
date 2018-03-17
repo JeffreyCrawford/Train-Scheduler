@@ -9,46 +9,16 @@ var config = {
 };
 firebase.initializeApp(config);
 
-
-
-
 var database = firebase.database();
 
-
-
-/* SUBMIT BUTTON ON CLICK EVENT */
-$(".submit").on("click", function() {
-
-    /* RETRIEVE INPUT VALUES AND STORE IN VARIABLES/OBJECT */
-    var name = $(".train-name").val().trim();
-    var destination = $(".destination").val().trim();
-    var firstTime = $(".first-time").val().trim();
-    var frequency = $(".frequency").val().trim();
-
-    /* CONSOLE LOG INPUT VARIABLES */
-    console.log(name)
-    console.log(destination)
-    console.log(firstTime)
-    console.log(frequency)
-
-    /* SET TRAIN OBJECT */
-    var train = {
-        name: name,
-        destination: destination,
-        firstTime: firstTime,
-        frequency: frequency
-    };
-
-    /* PUSH INFO TO DATABASE */
-    database.ref().push(train);
-
-    /* RETRIEVE INFO FROM DATABASE */
-    database.ref().on("child_added", function(trainSnapshot) {
-        var name = trainSnapshot.val().name;
-        var destination = trainSnapshot.val().destination;
-        var firstTime = trainSnapshot.val().firstTime;
-        var frequency = trainSnapshot.val().frequency;
-
+$(document).ready(
+    
+    /* INITIAL DATA PULL FROM FIREBASE */
+    database.ref().on("child_added", function(snapshot) {
+        var name = snapshot.val().name;
+        var destination = snapshot.val().destination;
+        var firstTime = snapshot.val().firstTime;
+        var frequency = snapshot.val().frequency;
 
         /* CALCULATE ARRIVAL TIMES */
         var firstTimeMoment = moment(firstTime, "hh:mm A").subtract(1, "years");
@@ -57,7 +27,6 @@ $(".submit").on("click", function() {
         var remainder = diff % frequency;
         var timeRemaining = frequency - remainder;
         var nextTrain = moment().add(timeRemaining, "minutes").format("hh:mm A");
-        
 
         /* APPEND DATABASE INFO TO TABLE */
         $("table > tbody").append(
@@ -68,15 +37,32 @@ $(".submit").on("click", function() {
             "</td><td>" + timeRemaining +
             "</td></tr>"
         );
-
-        
-    });
+    }),
 
 
+    /* PUSH NEW DATA TO FIREBASE ON CLICK */
+    $(".submit").on("click", function() {
 
+        /* RETRIEVE INPUT VALUES AND STORE IN VARIABLES/OBJECT */
+        var name = $(".train-name").val().trim();
+        var destination = $(".destination").val().trim();
+        var firstTime = $(".first-time").val().trim();
+        var frequency = $(".frequency").val().trim();
 
+        /* SET TRAIN OBJECT */
+        var train = {
+            name: name,
+            destination: destination,
+            firstTime: firstTime,
+            frequency: frequency
+        };
 
-    /* MINUTES AWAY = (NOW - FIRST) % FREQUENCY */
-    /* NEXT ARRIVAL = NOW + MINUTES AWAY */
+        /* PUSH TRAIN OBJECT TO DATABASE */
+        database.ref().push(train);
 
-})
+        /* EMPTIES THE FORM */
+        $("input").val("")
+
+    })
+
+)
