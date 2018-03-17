@@ -2,12 +2,19 @@
     text-align: center;
 }
 
+body {
+    background-color: whitesmoke;
+}
+
 table {
     width: 100%;
 }
 
 th, td {
     text-align: center;
+    border-bottom: solid;
+    border-bottom-width: .5px; 
+    border-color: grey
 }
 
 .form {
@@ -20,9 +27,15 @@ th, td {
 
 .card {
     width: 100%;
+    background-color: lightgrey;
+
 }
 
 .card-header {
-    background-color:rgb(24, 39, 39);
+    background-color:#3676db;
     color: whitesmoke;
+}
+
+.jumbotron {
+    background-color: lightgrey;
 }
